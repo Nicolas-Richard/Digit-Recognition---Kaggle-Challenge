@@ -1,11 +1,17 @@
-# Kaggle-challenges
-Some of my code wrote for Kaggle challenges
+# Digit Recognition Challenge
 
+Solution to the Kaggle digit recognition challenge : www.kaggle.com/c/digit-recognizer/data
 
-Digit Recognition Challenge
----------------------------
----------------------------
+My code
+-------
 
+> - digit.py is used for testing and exploration.
+> - digit-submission.py is used to build the submission file.
+
+> **Note:** Best score : 0.97214
+
+My approach
+-----------
 
 There are many classifiers which seem to work well on this problem. I personnaly chose to go with KNN at first as it's the easier, in my opinion, to get some **inuition** on.
 
