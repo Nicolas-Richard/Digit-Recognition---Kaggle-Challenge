@@ -45,7 +45,7 @@ Doing so I received a score of 0.96557. (rank 388)
 Adjusting this classfier using the regular options
 ---------------------------------------------------
 
-Before moving on to other classifiers, I wanted to check the different options of KNN. To do so, I have a look at the documentation (http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html). And quickly realize that some options affect **easy to understand parameters**, so I decide to try these two ones. **Weights, distance, and number of neighbors considered**.
+Before moving on to other classifiers, I wanted to check the different options of KNN. To do so, I have a look at the documentation (http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html). And quickly realize that some options affect **easy to understand parameters**, so I decide to try these 3 ones. **Weights, distance, and number of neighbors considered**.
 
 #### Weights
 
