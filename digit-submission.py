@@ -18,7 +18,7 @@ train = data[:, 1:]
 labels = data[:, :1]
 
 # Create a classifier, KNN
-knn = KNeighborsClassifier(n_neighbors=10)
+knn = KNeighborsClassifier(weights = 'distance', n_neighbors=5, p=3)
 
 # The learning is done on the first half of the dataset
 knn.fit(train, labels)
@@ -32,4 +32,4 @@ predicted['ImageId'] = predicted.index + 1
 predicted = predicted[['ImageId', 0]]
 predicted.columns = ['ImageId', 'Label']
 
-predicted.to_csv('pred.csv', header=False)
+predicted.to_csv('pred.csv', index=False)
