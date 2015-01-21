@@ -12,7 +12,7 @@ from sklearn import metrics
 data = pd.read_csv("train.csv")
 data = data.values
 
-data = data[:10000]
+data = data[:100]
 
 n_samples = data.shape[0]
 
@@ -21,7 +21,7 @@ train = data[:, 1:]
 labels = data[:, :1]
 
 # Create a classifier, KNN
-knn = KNeighborsClassifier(n_neighbors=10)
+knn = KNeighborsClassifier(weights = 'distance', n_neighbors=10, p=3)
 
 # The learning is done on the first half of the dataset
 knn.fit(train[:n_samples / 2], labels[:n_samples / 2])
