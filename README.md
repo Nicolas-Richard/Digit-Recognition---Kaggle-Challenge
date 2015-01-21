@@ -10,8 +10,8 @@ My code
 
 > **Note:** Best score : 0.97214
 
-My approach
------------
+
+# My approach
 
 There are many classifiers which seem to work well on this problem. I personnaly chose to go with KNN at first as it's the easier, in my opinion, to get some **inuition** on.
 
@@ -125,3 +125,13 @@ Final score
 > **Note:**
 score 0.97214, rank 210 (up 139). This is much more significant that the previous improvement.
 
+To go further
+------------
+
+Other things to try : 
+
+> 1. feature reduction, through PCA for example http://scikit-learn.org/stable/modules/feature_selection.html
+> 2. feature normalization, mean and standard deviation
+
+> - Here python code at 96,9% by combining different classifiers https://www.kaggle.com/c/digit-recognizer/forums/t/4281/sharing-python-code-for-knn-svc-and-random-forest
+> - Here python code at 98,7% http://challengepost.com/software/kaggledigitrecognizer
