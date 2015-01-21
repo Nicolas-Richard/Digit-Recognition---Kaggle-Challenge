@@ -47,6 +47,8 @@ Adjusting this classfier using the regular options
 
 Before moving on to other classifiers, I wanted to check the different options of KNN. To do so, I have a look at the documentation (http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html). And quickly realize that some options affect **easy to understand parameters**, so I decide to try these two ones. **Weights, distance, and number of neighbors considered**.
 
+#### Weights
+
 Once again I do some tests on small subsets of my dataset, in order to gain an understanding whether it's worth it to apply this on the whole dataset.
 
 I came to realize that using a different weighting option would give 0.01 more on the F1 score.
@@ -60,6 +62,7 @@ I run the classifier on the whole set and submit to Kaggle :
 
 > **Note:**result a score of 0.96643 (rank 345, move up 35 positions!). Not a huge improvement but it's a start.
 
+#### The distance 
 
 What about the distance used. (I'm discarding my weighting option for this tests)
 
@@ -84,6 +87,7 @@ Now in order to test this hypothesis I'd like to
 > - test on the whole set using p = 3
 > - test on the whole set using p = 3 and weights = 'distance'.
 
+#### Neighbors
 
 But all this is very time intensive. And I wonder if I could make it more efficient by reducing the number of neighbors I'm considering for my classification. I chose at the very start to consider 10. But the default, 5, may be enough.
 
@@ -104,6 +108,8 @@ and I look at the Wall time to give me the time elapsed for the whole run. Surpr
 > - 1000 records, n = 5, Wall time:      333.55 s, F1 = 0.94
 > - 1000 records, n = 10, Wall time:       332.84 s, F1 = 0.93
 
+#### Best set of options
+
 In conclusion, regarding the timing I have to say I don't think I can reach any conclusion for now.
 
 But it seems like the best choice of option would be :
@@ -112,6 +118,9 @@ KNeighborsClassifier(weights = 'distance', n_neighbors=5, p=3)
 ```
 
 So I ran it, it was extremely slow (14876.46 s, about 4 hours) but worth it !
+
+Final score
+-----------
 
 > **Note:**
 score 0.97214, rank 210 (up 139). This is much more significant that the previous improvement.
