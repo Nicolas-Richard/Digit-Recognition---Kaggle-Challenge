@@ -7,8 +7,9 @@ My code
 
 > - digit.py is used for testing and exploration.
 > - digit-submission.py is used to build the submission file.
+> - same scripts with '-pipeline' in the name works the same way but include PCA.
 
-> **Note:** Best score : 0.97214
+> **Note:** Best score : 0.97371
 
 
 # My approach
@@ -42,8 +43,8 @@ Since the classifier is obviously getting better with more data, I decided to tr
 > **Note:**
 Doing so I received a score of 0.96557. (rank 388)
 
-Adjusting this classfier using the regular options
----------------------------------------------------
+Adjusting this classfier using the regular options / tuning the hyperparameters
+-------------------------------------------------------------------------------
 
 Before moving on to other classifiers, I wanted to check the different options of KNN. To do so, I have a look at the documentation (http://scikit-learn.org/stable/modules/generated/sklearn.neighbors.KNeighborsClassifier.html). And quickly realize that some options affect **easy to understand parameters**, so I decide to try these 3 ones. **Weights, distance, and number of neighbors considered**.
 
@@ -119,19 +120,81 @@ KNeighborsClassifier(weights = 'distance', n_neighbors=5, p=3)
 
 So I ran it, it was extremely slow (14876.46 s, about 4 hours) but worth it !
 
-Final score
------------
 
 > **Note:**
 score 0.97214, rank 210 (up 139). This is much more significant that the previous improvement.
 
+Walking backwards, working on the features
+------------------------------------------
+
+Thankfully sci-kit learn pipelines makes very easy to combine features extraction and classification. (scikit-learn.org/stable/modules/pipeline.html)
+
+#### Adding feature reduction : PCA
+
+The motivation of using PCA here is to reduce number of features in the data while keeping as much relevant information as possible. In the data, we start with 784 dimensions for 28 x 28 pixels.
+
+Using PCA I can specify how many features to keep.
+http://scikit-learn.org/stable/modules/generated/sklearn.decomposition.PCA.html#sklearn.decomposition.PCA
+
+> - 5000 records, without PCA, F1 score 0.93, Wall time:      52.49 s.
+> - 5000 records, features keeped 500, F1 score 0.93, Wall time:     102.00 s.
+> - 5000 records, features keeped 100, F1 score 0.94, Wall time:      35.22 s.
+> - 5000 records, features keeped 50, F1 score 0.95, Wall time:      17.04 s.
+> - 5000 records, features keeped 10, F1 score 0.89, Wall time:      12.09 s.
+
+The good news is I now have a better and faster classifier, than I had using just the Knn classifier.
+
+> 1. Will this hold true with the classifiers options ?
+> 2. Will this prove scalable to 42000 records for training ?
+
+#### 1. Adding the options
+
+> - 5000 records, features keeped 100, F1 score 0.94
+> - 5000 records, features keeped 100, with Knn options, F1 score 0,94
+
+> - 5000 records, features keeped 50, F1 score 0.95
+> - 5000 records, features keeped 50, with Knn options, F1 score 0.94
+
+The hyperparameters I've previously identified as winners doesn't seem to go along so well with PCA
+
+#### 2. Is the speed improvement still significant with 42000 records ?
+
+Yes. Well it's very fast, if it's not a great way to improve my score I know PCA in this case is a great way to speed the classification. I'm keeping 50 features from the PCA now.
+
+Training on 20000 records, Wall time:     208.08 s.
+
+Create a submission file took: Wall time:     514.65 s.
+
+And the result 0.97343, a small improvement of 0.00129 which allowed me to rank 195, by gaining 15 places.
+
+The real gain here is the speed of the training, about 30 times faster.
+
+Keeping 100 features : 963.19 s.
+
+> **Note:**
+Highest score yet : 0.97371, and move up two positions to reach 193.
+
+
+#### What about adding feature normalization ?
+
+In this case, adding normalization to the pipeline turns out to be counter productive.
+
+1000, with normalization, F1 0.82
+1000, no normalization, F1 0.84
+
+5000, with normalization, F1 0.90
+5000, no normalization, F1 0.93
+
+10000, with normalization, F1 0.92
+10000, no normalization, F1 0.95
+
+Is this surpising ? First of all, given the nature of the dataset, each feature is already scaled between 0 for a white pixel and 255 for a black pixel. So all which is actually happening is about standard deviation. Could it be that by adjusting the stanrdad deviation I bring more noise ?
+
+
+
 To go further
-------------
+-------------
 
-Other things to try : 
-
-> 1. feature reduction, through PCA for example http://scikit-learn.org/stable/modules/feature_selection.html
-> 2. feature normalization, mean and standard deviation
-
-> - Here python code at 96,9% by combining different classifiers https://www.kaggle.com/c/digit-recognizer/forums/t/4281/sharing-python-code-for-knn-svc-and-random-forest
-> - Here python code at 98,7% http://challengepost.com/software/kaggledigitrecognizer
+> - Here is a python solution at 96,9%  combining different classifiers https://www.kaggle.com/c/digit-recognizer/forums/t/4281/sharing-python-code-for-knn-svc-and-random-forest
+> - Here a python script at 98,7% http://challengepost.com/software/kaggledigitrecognizer
+> - And some research will tell you that best results are obtained with convolutional neural networks.
